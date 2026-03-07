@@ -47,6 +47,7 @@
     border-radius: 10px;
     width: 30vw;
     padding-inline: 20px;
+    z-index: 10;
 }
 
 .chatContainer {
@@ -58,4 +59,18 @@
 .chattingArea {
     position: absolute;
     bottom: 0;
+}
+
+.meetingCodeDisplay {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+    z-index: 5;
 }

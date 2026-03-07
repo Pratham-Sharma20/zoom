@@ -4,10 +4,13 @@ import { createServer } from "node:http";
 import { Server } from "socket.io";
 
 import mongoose from "mongoose";
-import { connectToSocket } from "./controllers/socketManager.js";
+import { connectToSocket, isRoomExists } from "./controllers/socketManager.js";
 
 import cors from "cors";
 import userRoutes from "./routes/users.routes.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const server = createServer(app);
@@ -21,13 +24,19 @@ app.use(express.urlencoded({ limit: "40kb", extended: true }));
 
 app.use("/api/v1/users", userRoutes);
 
+app.get("/api/v1/meetings/check", (req, res) => {
+    const { meetingCode } = req.query;
+    const exists = isRoomExists(meetingCode);
+    res.json({ exists });
+});
+
 const start = async () => {
     app.set("mongo_user")
-    const connectionDb = await mongoose.connect("mongodb+srv://imdigitalashish:imdigitalashish@cluster0.cujabk4.mongodb.net/")
+    const connectionDb = await mongoose.connect(process.env.MONGO_URI)
 
     console.log(`MONGO Connected DB HOst: ${connectionDb.connection.host}`)
     server.listen(app.get("port"), () => {
-        console.log("LISTENIN ON PORT 8000")
+        console.log(`LISTENIN ON PORT ${app.get("port")}`)
     });
 
 

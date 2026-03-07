@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import io from "socket.io-client";
 import { Badge, IconButton, TextField } from '@mui/material';
 import { Button } from '@mui/material';
@@ -11,6 +12,7 @@ import MicOffIcon from '@mui/icons-material/MicOff'
 import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import StopScreenShareIcon from '@mui/icons-material/StopScreenShare'
 import ChatIcon from '@mui/icons-material/Chat'
+import CloseIcon from '@mui/icons-material/Close';
 import server from '../environment';
 
 const server_url = server;
@@ -25,6 +27,7 @@ const peerConfigConnections = {
 
 export default function VideoMeetComponent() {
 
+    const { url: meetingCode } = useParams();
     var socketRef = useRef();
     let socketIdRef = useRef();
 
@@ -40,7 +43,7 @@ export default function VideoMeetComponent() {
 
     let [screen, setScreen] = useState();
 
-    let [showModal, setModal] = useState(true);
+    let [showModal, setModal] = useState(false);
 
     let [screenAvailable, setScreenAvailable] = useState();
 
@@ -279,7 +282,7 @@ export default function VideoMeetComponent() {
         socketRef.current.on('signal', gotMessageFromServer)
 
         socketRef.current.on('connect', () => {
-            socketRef.current.emit('join-call', window.location.href)
+            socketRef.current.emit('join-call', meetingCode)
             socketIdRef.current = socketRef.current.id
 
             socketRef.current.on('chat-message', addMessage)
@@ -405,7 +408,7 @@ export default function VideoMeetComponent() {
             let tracks = localVideoref.current.srcObject.getTracks()
             tracks.forEach(track => track.stop())
         } catch (e) { }
-        window.location.href = "/"
+        window.location.href = "/home"
     }
 
     let openChat = () => {
@@ -471,7 +474,12 @@ export default function VideoMeetComponent() {
                     {showModal ? <div className={styles.chatRoom}>
 
                         <div className={styles.chatContainer}>
-                            <h1>Chat</h1>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <h1>Chat</h1>
+                                <IconButton onClick={() => setModal(false)}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </div>
 
                             <div className={styles.chattingDisplay}>
 
@@ -497,6 +505,10 @@ export default function VideoMeetComponent() {
 
                         </div>
                     </div> : <></>}
+
+                    <div className={styles.meetingCodeDisplay}>
+                        <p>{meetingCode}</p>
+                    </div>
 
 
                     <div className={styles.buttonContainers}>
