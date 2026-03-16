@@ -84,8 +84,9 @@ export default function Authentication() {
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square className="authPagePaper">
                     <Box
+                        className="authPageBox"
                         sx={{
                             my: 8,
                             mx: 4,
@@ -97,9 +98,7 @@ export default function Authentication() {
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                             <LockOutlinedIcon />
                         </Avatar>
-
-
-                        <div>
+                        <div className="authPageBtnGroup">
                             <Button variant={formState === 0 ? "contained" : ""} onClick={() => { setFormState(0) }}>
                                 Sign In
                             </Button>
@@ -107,7 +106,6 @@ export default function Authentication() {
                                 Sign Up
                             </Button>
                         </div>
-
                         <Box component="form" noValidate sx={{ mt: 1 }}>
                             {formState === 1 ? <TextField
                                 margin="normal"
@@ -120,7 +118,6 @@ export default function Authentication() {
                                 autoFocus
                                 onChange={(e) => setName(e.target.value)}
                             /> : <></>}
-
                             <TextField
                                 margin="normal"
                                 required
@@ -131,7 +128,6 @@ export default function Authentication() {
                                 value={username}
                                 autoFocus
                                 onChange={(e) => setUsername(e.target.value)}
-
                             />
                             <TextField
                                 margin="normal"
@@ -142,12 +138,9 @@ export default function Authentication() {
                                 value={password}
                                 type="password"
                                 onChange={(e) => setPassword(e.target.value)}
-
                                 id="password"
                             />
-
                             <p style={{ color: "red" }}>{error}</p>
-
                             <Button
                                 type="button"
                                 fullWidth
@@ -157,19 +150,15 @@ export default function Authentication() {
                             >
                                 {formState === 0 ? "Login " : "Register"}
                             </Button>
-
                         </Box>
                     </Box>
                 </Grid>
             </Grid>
-
             <Snackbar
-
                 open={open}
                 autoHideDuration={4000}
                 message={message}
             />
-
         </ThemeProvider>
     );
 }

@@ -2,6 +2,8 @@
     position: relative;
     height: 100vh;
     background: rgb(1, 4, 48);
+    min-height: 100vh;
+    width: 100vw;
 }
 
 .meetUserVideo {
@@ -11,6 +13,8 @@
     width: auto;
     left: 0;
     border-radius: 20px;
+    max-width: 30vw;
+    min-width: 120px;
 }
 
 .buttonContainers {
@@ -18,6 +22,10 @@
     width: 100vw;
     bottom: 0;
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 .buttonContainers svg {
@@ -27,9 +35,11 @@
 .conferenceView { 
 
     display: flex;
-    
+    flex-wrap: wrap;
     padding: 10px;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .conferenceView  video {
@@ -37,6 +47,8 @@
     height: 20vh;
     min-width: 30vw;
     border-radius: 10px;
+    max-width: 100%;
+    object-fit: cover;
 }
 
 .chatRoom {
@@ -46,8 +58,11 @@
     background: white;
     border-radius: 10px;
     width: 30vw;
+    min-width: 220px;
+    max-width: 400px;
     padding-inline: 20px;
     z-index: 10;
+    box-sizing: border-box;
 }
 
 .chatContainer {
@@ -73,4 +88,77 @@
     font-weight: 500;
     backdrop-filter: blur(4px);
     z-index: 5;
+    max-width: 80vw;
+    word-break: break-all;
+}
+
+/* Responsive styles for VideoMeet page */
+@media (max-width: 900px) {
+    .meetVideoContainer {
+        min-height: 100vh;
+        width: 100vw;
+    }
+    .conferenceView video {
+        width: 80vw;
+        min-width: 120px;
+        height: 18vh;
+    }
+    .chatRoom {
+        width: 60vw;
+        min-width: 120px;
+        max-width: 95vw;
+    }
+    .meetUserVideo {
+        max-width: 60vw;
+        min-width: 80px;
+        height: 15vh;
+    }
+    .meetingCodeDisplay {
+        font-size: 1rem;
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    .meetVideoContainer {
+        min-height: 100vh;
+        width: 100vw;
+    }
+    .conferenceView {
+        flex-direction: column;
+        gap: 6px;
+        padding: 4px;
+    }
+    .conferenceView video {
+        width: 98vw;
+        min-width: 60vw;
+        height: 12vh;
+    }
+    .chatRoom {
+        width: 98vw;
+        min-width: 60vw;
+        max-width: 99vw;
+        left: 0;
+        right: unset;
+        height: 60vh;
+        top: 10vh;
+        padding-inline: 6px;
+    }
+    .meetUserVideo {
+        max-width: 98vw;
+        min-width: 60vw;
+        height: 10vh;
+    }
+    .buttonContainers {
+        gap: 0.2rem;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-bottom: 2px;
+    }
+    .meetingCodeDisplay {
+        font-size: 0.9rem;
+        padding: 4px 6px;
+        top: 8px;
+        right: 8px;
+    }
 }
